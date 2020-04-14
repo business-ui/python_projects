@@ -5,7 +5,6 @@
 
 
 import subprocess as cmd
-cmd.run("python covid.ipynb")
-cmd.run('jupyter nbconvert covid.ipynb --no-input --output "../../../../var/www/html/covid.html"')
-cmd.run("")
+cmd.call("python covid.ipynb")
+cmd.call('jupyter nbconvert covid.ipynb --no-input --output "../../../../var/www/html/covid.html"')
 
