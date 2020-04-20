@@ -17,6 +17,8 @@ import requests
 from collections import Counter
 import datetime as dt
 
+from waitress import serve
+
 app = Flask(__name__)
 scheduler = APScheduler()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -260,4 +262,4 @@ if __name__ == '__main__':
     
     scheduler.add_job(id='Scheduled task',func = scheduledTask, trigger = 'interval', hours=24)
     scheduler.start()
-    app.run(debug=True)
+    serve(app)
