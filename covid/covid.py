@@ -7,6 +7,9 @@ import requests
 from collections import Counter
 import datetime as dt
 
+from sqlalchemy import create_engine
+db = create_engine('sqlite:///../../working_version/database.db')
+connection = db.raw_connection()
 
 url = "https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_daily_reports/"
 soup = BeautifulSoup(requests.get(url).text, features='lxml')
@@ -60,6 +63,8 @@ for each in range(len(timeline_csvs)):
         time_slice['Date'] = dt.datetime.strptime(csv_date,"%m-%d-%Y")
     df = df.append(time_slice)
 
-import sqlite3
-db = sqlite3.connect('./working_version/database.db')
-df.to_sql("covid_data",db,if_exists='replace',index=False)
+
+# cursor = connection.cursor()
+
+df.to_sql("covid_data",connection,if_exists='replace',index=False)
+connection.close()
